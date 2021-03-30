@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+  <!-- Style CSS -->
+  <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
+
+  <style>
+    .d-none {
+      display: none;
+    }
+    .d-block {
+      display: block;
+    }
+    .justify_beetween {
+      justify-content:space-between;
+    }
+    .aling-center{
+      align-items: center;
+    }
+    .font-bold {
+      font-weight: bold;
+    }
+
+    #notify {
+      flex-direction: row;      
+      justify-content:space-between;
+      display: none;
+      padding: 0.5em;
+    }
+    #notify.success {
+      background-color: #d4edda;
+    }
+    #notify.error{
+      background-color: #f8d7da;
+    }
+    #notify.success .notify-title,  #notify.success .notify-message {
+      color: #155724;     
+    } 
+    #notify.error .notify-title,  #notify.error .notify-message {
+      color: #721c24;     
+    }    
+    #notify.success, #notify.error {
+      display: flex !important;
+    }
+    #notify .notify-button {
+      background-color: transparent;
+      outline: none;
+      border: none;
+      color: #222;
+    }  
+    #repositorios .repositorio-list{
+     background-color: #fff;
+     padding: 0.5em; 
+     border-radius: 0.5em; 
+     border-left: 5px solid #155724;
+    }
+    #repositorios .repositorio-list a{
+     color: #222;
+    }
+    .button_search {
+      background-color: hsl(354, 61%, 28%);
+      cursor: pointer;
+      border-radius: 0.5em;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-weight: 300;
+      padding: 0.3em 0.5em;
+      transition: box-shadow .3s;
+    }
+    .button_search:hover{
+      box-shadow: 0 0 11px rgba(33,33,33,.2); 
+      background-color: hsl(354, 61%, 40%);
+    }
+
+  </style>
+ 
+</head>
+<body>
+  <header>
+      <nav class="nav-bar">
+        <div class="nav-id">
+            <img class="nav-logo" src="img/custom.png" width="120"  />
+        </div>      
+        <div class="nav-hidden">              
+          <ul class="nav-menu" id="collapse-menu">
+            <li class="nav-item">
+              <a href="#" class="nav-link">Home</a>             
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Sobre</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Contato</a>
+            </li>
+          </ul>       
+      </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="content grid-row">      
+      <div class="content-page col-12 container m-3-vertical p-3-vertical" style="background-color: #eee; border-radius: 0.5em;">   
+          <div class="grid-row">
+            <div class="m-2-horizontal m-2-vertical col-5 m-auto">
+              <h1>Listar Repositórios</h1>            
+              <label for="search">Nome de Usuário:</label>  
+              <input name='search' id="search"  type="text"/>  
+              <button type="button" class="button_search" onclick="searchFromGithub()">Buscar</button>                        
+              <img src="https://miro.medium.com/max/4000/0*MZMl76wKo2FQLqG0.png" width="50%" class="m-auto m-2-vertical"/>
+            </div>
+            <div class="m-2-vertical col-7 m-auto">
+                <div id="notify" class="">   
+                  <div class="n-messages">               
+                  <div class="notify-title font-bold"></div>
+                  <div class="notify-message"></div> 
+                  </div>
+                  <button onclick="toast.close()" type="button" class="notify-button"><i class="fas fa-times"></i></button> 
+                </div>    
+                <div id="repositorios"></div>            
+            </div>
+            
+            </div>
+
+          </div>          
+      </div>     
+    </div>
+  </main>
+  <footer class="content-footer">
+    <div class="grid-row container">
+      <div class="col-4 m-auto">
+         <div class="fs">
+           <h6 class="fs-title">Sobre Nós</h6>
+           <img src="img/custom.png" width="180"  />
+           <p class="text-justify">
+             A custom está a 15 anos no mercado oferecendo soluções tecnológicas para sua empresa. 
+           </p>
+         </div>
+      </div>
+      <div class="col-4 m-auto">
+        <div class="fs">
+            <h6 class="fs-title">Redes Sociais</h6>
+            <p>Acompanhe nossas redes sociais</p>
+            <ul class="list-unstyled list-horizontal">
+              <li>
+                <a href="#" class="m-1-horizontal m-0-vertical social-icon"><i class="fab fa-facebook-square fa-2x" ></i></a>
+              </li>
+              <li>
+                <a href="#" class="m-1-horizontal m-0-vertical social-icon"><i class="fab fa-twitter-square fa-2x" ></i></a>
+              </li>
+              <li>
+                <a href="#" class="m-1-horizontal m-0-vertical social-icon"><i class="fab fa-instagram fa-2x" ></i></a>
+              </li>
+              <li>
+                <a href="#" class="m-1-horizontal m-0-vertical social-icon"><i class="fab fa-linkedin fa-2x" ></i></a>
+               </li>
+           </ul>  
+
+        </div>          
+      </div>
+      <div class="col-4 m-auto">
+        <div class="fs">
+          <h6 class="fs-title">Contato</h6>
+          <ul class="list-unstyled">
+             <li>
+               <p class="m-1-vertical">(83) 0000-0000</p>
+             </li>
+             <li>
+              <p class="m-1-vertical">contato@custom.com</p>
+             </li>
+             <li>
+              <p class="m-1-vertical">
+               João - Brasil
+              </p>
+             </li>
+             <li></li>
+          </ul>           
+        </div>
+     </div>
+    </div>
+    <div class="copyright-bar">
+        <h6 class="copyright-text text-center">© 2021 Copyright <a href="#" class='copyright-link'>Custom</a> Todos los Derechos Reservados</h6>
+    </div>
+  </footer>
+  <!-- Axios Import -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script type="text/javascript">
+    // Notification Function
+    const toast = {
+      message: (type, title="", message="" ) => {
+       let message_type = document.querySelector("#notify");
+       let message_text = document.querySelector("#notify > .n-messages");
+       message_text.childNodes[1].innerHTML = title;
+       message_text.childNodes[3].innerHTML = message;
+       message_type.classList.add(type === 'error' ? 'error' : 'success')
+      },
+      close: () => {
+        let message_type = document.querySelector("#notify");
+        let classe_message = message_type.classList;
+         classe_message.contains("error") ? classe_message.remove("error") : classe_message.remove("success")
+      }
+    }
+    // Handling Error
+    function trataError (err){
+      let status;
+      let message;
+      if(err.response){
+        let data = err.response;
+        status = data.status;
+        message = "Repositório não encontrado"; 
+      }
+      else {
+        status = 500
+        message = "Erro de conexão, tente novamente mais tarde"
+      }
+      return toast.message('error', `Erro ${status}`,  message );
+    }
+    // Handling response
+    function trataResp (response){         
+      if(response.length > 0){
+         toast.message('success', `Concluido!!!`, "Repositório encontrado com successo!!!");  
+        let itens = document.querySelector("#repositorios")
+        // Remove all itens
+        itens.innerHTML = "";  
+        const print_itens = response.map(e => {
+          return `
+          <li class="repositorio-list m-2-vertical">
+            <a href="${e.svn_url}" target="_blank">
+              <p class="m-1-vertical"><strong>Repositório:</strong> ${e.name}</p>
+              <p class="m-1-vertical"><strong>Descrição:</strong> ${e.description === null ? "-" : e.description}</p>
+            </a>
+          <li>`
+        }).join(' ')     
+        return itens.innerHTML = `<ul class="list-unstyled">${print_itens}</ul>`          
+      } 
+      else {
+        return toast.message('error', "Não encontrado", "Não há repositórios")
+      } 
+    }
+
+    // Search from github api
+    async function searchFromGithub(){
+      const USER = await document.querySelector('#search').value  
+      const URL_BASE = `https://api.github.com/users/${USER}/repos`;     
+      const getData = async () => {
+        try {
+          const response = await axios.get(`${URL_BASE}`)
+          return trataResp(response.data)
+        }
+        catch(err){
+          return trataError(err)          
+        }
+      }
+      return getData()
+    }  
+  </script>
+</body>
+
+</html>
