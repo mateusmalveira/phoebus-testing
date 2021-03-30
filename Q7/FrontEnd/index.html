@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <title>Agenda</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Agenda</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+            </li>            
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" onkeyup="a.search_contact(event)" aria-label="Search">
+          </form>
+        </div>
+      </div>
+    </nav>
+    <main class="container my-5">
+          <div class="row">
+            <div class="col-md-4" >
+              <div class="py-5 px-5 mb-2" style="background-color: #eee;">
+              <h4 class="text-center">Cadastrar Telefone</h4>
+              <form id="create_contact">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nome</label>
+                  <input type="name" class="form-control" id="name">                 
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Telefone</label>
+                  <input
+                   type="phone" 
+                   class="form-control"
+                   id="phone"
+                   >  
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                   type="email" 
+                   class="form-control"
+                   id="email"
+                   >  
+                </div>                
+                <button type="button" onclick = 'a.createData()' class="btn btn-primary">Cadastrar</button>
+              </form>
+              </div>
+            </div>          
+              <div class="col-md-8">
+                <div class=" py-5 px-5 mb-2" style="background-color: #eee;">
+                <h4 class="text-center">Listar Telefones</h4>
+                <ul class="list-group" id="contact-list"></ul>             
+            </div>
+          </div>
+          </div>
+
+          <div class="modal fade" id="modalShowContact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              
+            </div>
+          </div>           
+    </main>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        let base_url = 'http://localhost:3000/contacts/'
+        const config = { headers: {'Content-Type': 'application/json'} };
+        const ApiService = {
+          getAll: () =>  axios.get(`${base_url}/`).then(res => res.data).catch(err => []),
+          deleteID: (id) => axios.delete(`${base_url}/${id}`).then( res => res.data).catch(err => []),
+          getID: (id) => axios.get(`${base_url}/${id}`).then( res => res.data).catch(err => []),
+          updateID: (data) => axios.put(`${base_url}/`, data, config).then( res => res.data).catch(res => []),
+          createID: (data) => axios.post(`${base_url}/`, data, config).then( res => res.data).catch(res => [])
+        } 
+
+        const contactListScreen = ({name, id}) => {
+          return (`<li class="list-group-item my-2">
+                   <div class="row align-items-center">
+                    <div class="col-xl-8">
+                      <p class="mt-0 mb-0"><strong>Nome: </strong> ${name}</p>
+                    </div>
+                    <div class="col-xl-4">
+                      <button class="btn btn-primary btn-sm" onclick="a.openModal(${id}, ${"'show'"})"><i class="fas fa-eye"></i></button>                       
+                      <button onclick="a.openModal(${id}, ${"'update'"})" class="btn btn-warning btn-sm"><i class="fas fa-edit" style="color: #FFF;"></i></button> 
+                      <button class="btn btn-danger btn-sm" onclick="a.excludeData(${id})"><i class="fas fa-trash"></i></button>                       
+                    </div>
+                   </div>
+                  </li>`)
+        }
+
+        const modalData = (props) => {
+          let {name, id, telefone, email} = props.data;                        
+          function hideModal(){
+            return props.modal.hide();
+          } 
+          return (
+            `<div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">${props.title}</h5>
+                  <button type="button" onclick={"${hideModal()}"} class="close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="update-contact">
+                  <div class="mb-3">                 
+                  <label for="name" class="form-label">Nome</label>
+                  <input 
+                      type="name" 
+                      class="form-control" 
+                      id="name"                                                      
+                      ${props.type === 'show'? 'readonly' : null }
+                      value="${name}">                 
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Telefone</label>
+                  <input
+                   type="phone"                  
+                   class="form-control"
+                   ${props.type === 'show'? 'readonly' : null }
+                   id="phone"
+                   value="${telefone}"
+                   >  
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    ${props.type === 'show'? 'readonly' : null }
+                   type="email" 
+                   class="form-control"
+                   id="email"
+                   value="${email}"
+                   >  
+                </div> 
+                </form>               
+                </div>
+                <div class="modal-footer">
+                    ${props.type !== 'update' ? '' : `
+                    <button type="button" class="btn btn-primary"} onclick="a.updateData(${id})">Atualizar</button>  
+                    `  }
+                    <button type="button" class="btn btn-secondary" onclick={"${hideModal()}"} data-dismiss="modal">Close</button>           
+                </div>
+              </div>              `
+          )
+        }
+
+        let Agenda = class Agenda {
+          constructor(state) {
+            this.state = [];
+          }
+          async index() {
+            let data = await ApiService.getAll();
+            if(data.data && data.data.length > 0){
+              const list = document.querySelector("#contact-list");
+              this.state = data.data;
+              return this.reloadData();
+            }           
+          }
+          reloadData(data=undefined) {
+            let dataReload = data === undefined ? this.state : data
+            const lista =  dataReload.map((e, i) => 
+                  contactListScreen(e)
+            ).join(' ');
+            const list = document.querySelector("#contact-list");
+            list.innerHTML = "";
+            return list.innerHTML = lista;
+          }
+          async excludeData(id) {
+            const data = await ApiService.deleteID(id);
+            if(data.data){
+              this.state.splice(
+                this.state.findIndex((ctc) => {
+                return ctc.id === id;
+              }), 1);
+              return this.reloadData();
+            }            
+          }          
+          async listData(id) {            
+            const data = await ApiService.getID(id);            
+            if(data.data){
+              return data.data
+            }
+          }
+
+          async search_contact(event){
+            let value= event.target.value;
+            if(value === ""){
+              this.reloadData();
+            }
+            else {
+            const lista = this.state.filter((e) => {
+                if(e.name.match(value) || e.email.match(value) || e.telefone.match(value)){
+                  return e
+                }                               
+            })
+            return this.reloadData(lista);
+            }
+          }
+
+         async createData() {
+          const formCreate = await document.querySelectorAll("#create_contact input");
+          const data = {}
+
+           await formCreate.forEach(ctc => {
+               Object.assign(data, {[ctc.id]: ctc.value})             
+           })
+
+           await ApiService.createID(JSON.stringify(data)).then(res => {
+              if(res.success){
+                this.index();
+              }
+            })
+         }
+         async updateData(id) {
+            const formUpdate = await document.querySelectorAll("#update-contact input");
+            let data = {
+              id: id
+            }
+            await formUpdate.forEach(ctc => {
+               Object.assign(data, {[ctc.id]: ctc.value})             
+            })
+            await ApiService.updateID(JSON.stringify(data)).then(res => {
+              if(res.success){
+                this.index();
+              }
+            })
+                     
+            
+          }
+
+          async openModal(id, type='show'){
+            let data;
+            if(type === "show"){
+              data = await this.state.find(ctc => ctc.id === id);
+            } 
+            else if( type === "update"){
+              data = await this.listData(id);
+            };           
+            let selectModal = await document.querySelector('#modalShowContact > .modal-dialog');
+            selectModal.innerHTML = "";            
+            let modal = new bootstrap.Modal(document.querySelector('#modalShowContact'));
+            selectModal.innerHTML = modalData({title: "Visualização de Dados", data: data, modal: modal, type:type})
+            modal.show();           
+          }
+        };
+
+    </script>  
+    
+    <script type="text/javascript">
+     let a = new Agenda();
+     a.index();    
+    </script>
+        
+        
+   
+  </body>
+</html>
