@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Corrigir link</title>
+  </head>
+  <body onload="registerLinks()">
+    
+    <a href="//www.cade.com">cade</a><br/>
+    <a href="//www.altavista.com">AltaVista</a><br/>
+    <a href="//www.google.com">Google</a><br/>
+    </body>
+
+  <script>
+    function registerLinks() {
+        var as = document.getElementsByTagName('a');
+        for (var i = 0; i < as.length; i++){          
+            let index = i;
+            as[i].onclick = function(){
+              alert(index);
+              return false;
+        }
+  }
+   
+}
+
+  </script>
+</html>
