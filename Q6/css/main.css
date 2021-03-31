@@ -12,6 +12,9 @@ a {
 a:visited {
   color: unset; }
 
+button {
+  outline: none; }
+
 header {
   padding: 0px;
   margin: 0px; }
@@ -33,13 +36,47 @@ body {
     .nav-bar .nav-id .nav-logo {
       margin: 0.2em 0; }
   .nav-bar .nav-buttom {
+    border: none;
+    background-color: transparent;
     cursor: pointer;
     display: none; }
+    .nav-bar .nav-buttom .mobile-check {
+      display: none; }
     @media (max-width: 990px) {
       .nav-bar .nav-buttom {
-        display: block; } }
+        display: block; }
+        .nav-bar .nav-buttom:focus ~ .mobile-nav {
+          position: absolute;
+          display: block; } }
+  .nav-bar .mobile-nav {
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    display: none; }
+    .nav-bar .mobile-nav .nav-menu {
+      flex-direction: column;
+      border-bottom: 3px solid #b71c1c; }
+      .nav-bar .mobile-nav .nav-menu .nav-item {
+        padding: 0.5rem 1rem;
+        background-color: #fff;
+        margin: 0; }
+        .nav-bar .mobile-nav .nav-menu .nav-item .nav-link {
+          display: block;
+          padding: 1rem 1rem;
+          color: #222;
+          font-size: 1rem;
+          font-weight: 500;
+          transition: color 0.2s; }
+          .nav-bar .mobile-nav .nav-menu .nav-item .nav-link:hover {
+            color: #b71c1c;
+            background-color: #e4e4e4; }
+  @media (max-width: 990px) {
+    .nav-bar .nav-hidden > * {
+      display: none; } }
 
 .nav-menu {
+  overflow: hidden;
   list-style: none;
   flex-direction: row;
   display: flex;
@@ -59,12 +96,10 @@ body {
         color: #b71c1c; }
 
 .content .content-aside {
-  background-color: blue;
-  height: 20em; }
+  min-height: 25em; }
 
 .content .content-page {
-  background-color: red;
-  height: 20em; }
+  min-height: 25em; }
 
 .grid-row {
   width: 100%;
@@ -210,6 +245,12 @@ footer {
   margin-top: 0px;
   margin-bottom: 0px; }
 
+.mt-1 {
+  margin-top: calc(0.5 * 1rem); }
+
+.mb-1 {
+  margin-bottom: calc(0.5 * 1rem); }
+
 .m-1-horizontal {
   margin-left: calc(0.5 * 1rem);
   margin-right: calc(0.5 * 1rem); }
@@ -225,6 +266,12 @@ footer {
 .p-1-vertical {
   padding-top: calc(0.5 * 1rem);
   padding-bottom: calc(0.5 * 1rem); }
+
+.mt-2 {
+  margin-top: calc(0.5 * 2rem); }
+
+.mb-2 {
+  margin-bottom: calc(0.5 * 2rem); }
 
 .m-2-horizontal {
   margin-left: calc(0.5 * 2rem);
@@ -242,6 +289,12 @@ footer {
   padding-top: calc(0.5 * 2rem);
   padding-bottom: calc(0.5 * 2rem); }
 
+.mt-3 {
+  margin-top: calc(0.5 * 3rem); }
+
+.mb-3 {
+  margin-bottom: calc(0.5 * 3rem); }
+
 .m-3-horizontal {
   margin-left: calc(0.5 * 3rem);
   margin-right: calc(0.5 * 3rem); }
@@ -257,6 +310,12 @@ footer {
 .p-3-vertical {
   padding-top: calc(0.5 * 3rem);
   padding-bottom: calc(0.5 * 3rem); }
+
+.mt-4 {
+  margin-top: calc(0.5 * 4rem); }
+
+.mb-4 {
+  margin-bottom: calc(0.5 * 4rem); }
 
 .m-4-horizontal {
   margin-left: calc(0.5 * 4rem);
@@ -274,6 +333,12 @@ footer {
   padding-top: calc(0.5 * 4rem);
   padding-bottom: calc(0.5 * 4rem); }
 
+.mt-5 {
+  margin-top: calc(0.5 * 5rem); }
+
+.mb-5 {
+  margin-bottom: calc(0.5 * 5rem); }
+
 .m-5-horizontal {
   margin-left: calc(0.5 * 5rem);
   margin-right: calc(0.5 * 5rem); }
@@ -289,6 +354,12 @@ footer {
 .p-5-vertical {
   padding-top: calc(0.5 * 5rem);
   padding-bottom: calc(0.5 * 5rem); }
+
+.mt-6 {
+  margin-top: calc(0.5 * 6rem); }
+
+.mb-6 {
+  margin-bottom: calc(0.5 * 6rem); }
 
 .m-6-horizontal {
   margin-left: calc(0.5 * 6rem);

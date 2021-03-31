@@ -14,6 +14,10 @@ a:visited {
   color: unset;
 }
 
+button {
+  outline: none;
+}
+
 // Menu
 $back-nav: #fff;
 $color-nav: #222;
@@ -48,22 +52,64 @@ body {
   }
 
   .nav-buttom {
+    .mobile-check {
+      display: none;
+    }
+    border: none;
+    background-color: transparent;
     cursor: pointer;
     display: none;
     @media (max-width: 990px) {
       display: block;
+      &:focus {
+        & ~ .mobile-nav {
+          // display: block;
+          // height: 200px;
+          position: absolute;
+          display: block;
+        }
+      }
     }
   }
-  // .nav-hidden > * {
-  //   @media (max-width: 990px) {
-  //     &:not(#collapse-menu) {
-  //       display: none;
-  //     }
-  //   }
-  // }
+
+  .mobile-nav {
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    display: none;
+    .nav-menu {
+      flex-direction: column;
+      border-bottom: 3px solid $site-color;
+      .nav-item {
+        padding: 0.5rem 1rem;
+        background-color: #fff;
+        margin: 0;
+        .nav-link {
+          display: block;
+          padding: 1rem 1rem;
+          color: $color-nav;
+          font-size: 1rem;
+          font-weight: 500;
+          transition: color 0.2s;
+          &:hover {
+            color: $site-color;
+            background-color: #e4e4e4;
+          }
+        }
+      }
+    }
+  }
+
+  .nav-hidden > * {
+    @media (max-width: 990px) {
+      display: none;
+    }
+  }
 }
 // Navbar Menu
 .nav-menu {
+  overflow: hidden;
   list-style: none;
   flex-direction: row;
   display: flex;
@@ -88,12 +134,10 @@ body {
 //Conteúdo
 .content {
   .content-aside {
-    background-color: blue;
-    height: 20em;
+    min-height: 25em;
   }
   .content-page {
-    background-color: red;
-    height: 20em;
+    min-height: 25em;
   }
 }
 
@@ -192,6 +236,12 @@ $number_of_columns: 12;
 $number_of_margins: 6;
 $single_row: 0.5;
 @for $i from 1 through $number_of_margins {
+  .mt-#{$i} {
+    margin-top: calc(#{$single_row} * #{$i}rem);
+  }
+  .mb-#{$i} {
+    margin-bottom: calc(#{$single_row} * #{$i}rem);
+  }
   .m-#{$i}-horizontal {
     margin-left: calc(#{$single_row} * #{$i}rem);
     margin-right: calc(#{$single_row} * #{$i}rem);
@@ -215,6 +265,7 @@ $single_row: 0.5;
   list-style-type: none;
   -webkit-padding-start: 0;
 }
+// Set itens in horizontal
 .list-horizontal {
   display: flex;
   flex-direction: row;
