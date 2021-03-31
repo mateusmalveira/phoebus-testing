@@ -103,15 +103,12 @@
         }
 
         const modalData = (props) => {
-          let {name, id, telefone, email} = props.data;                        
-          function hideModal(){
-            return props.modal.hide();
-          } 
+          let {name, id, telefone, email} = props.data;   
           return (
             `<div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">${props.title}</h5>
-                  <button type="button" onclick={"${hideModal()}"} class="close">
+                  <button type="button" class="close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -152,15 +149,16 @@
                     ${props.type !== 'update' ? '' : `
                     <button type="button" class="btn btn-primary"} onclick="a.updateData(${id})">Atualizar</button>  
                     `  }
-                    <button type="button" class="btn btn-secondary" onclick={"${hideModal()}"} data-dismiss="modal">Close</button>           
+                    <button type="button" class="btn btn-secondary close" >Close</button>           
                 </div>
               </div>              `
           )
         }
 
         let Agenda = class Agenda {
-          constructor(state) {
+          constructor(state, modal) {
             this.state = [];
+            this.modal = new bootstrap.Modal(document.querySelector('#modalShowContact'));
           }
           async index() {
             let data = await ApiService.getAll();
@@ -237,9 +235,7 @@
               if(res.success){
                 this.index();
               }
-            })
-                     
-            
+            }) 
           }
 
           async openModal(id, type='show'){
@@ -251,10 +247,15 @@
               data = await this.listData(id);
             };           
             let selectModal = await document.querySelector('#modalShowContact > .modal-dialog');
-            selectModal.innerHTML = "";            
-            let modal = new bootstrap.Modal(document.querySelector('#modalShowContact'));
-            selectModal.innerHTML = modalData({title: "Visualização de Dados", data: data, modal: modal, type:type})
-            modal.show();           
+            selectModal.innerHTML = "";      
+            selectModal.innerHTML = modalData({title: "Visualização de Dados", data: data, modal: this.modal, type:type})   
+            this.modal.show(); 
+            document.querySelectorAll('#modalShowContact button.close').forEach(btClose => {
+              let modal = this.modal;
+              btClose.addEventListener("click", function (){
+                modal.hide();
+              } );
+            } )               
           }
         };
 
