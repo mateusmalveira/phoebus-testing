@@ -1,3 +1,4 @@
+// Import contact model
 var Contact = require("../Models/contact");
 
 exports.list_contact_all = async function (req, res) {
@@ -44,10 +45,7 @@ exports.update_contact = async function (req, res) {
   }
 };
 
-exports.search_contact = async function (req, res) {
-  res.send("Implementando");
-};
-
+// Destroy contacts
 exports.destroy_contact = async function (req, res) {
   try {
     const { id } = req.params;
