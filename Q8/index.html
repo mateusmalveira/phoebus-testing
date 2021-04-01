@@ -16,7 +16,8 @@
   <script>
     function registerLinks() {
         var as = document.getElementsByTagName('a');
-        for (var i = 0; i < as.length; i++){          
+        for (var i = 0; i < as.length; i++){    
+          //fix function add variable index = i 
             let index = i;
             as[i].onclick = function(){
               alert(index);

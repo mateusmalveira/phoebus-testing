@@ -1,5 +1,7 @@
+// Function compare version
 function compareVersion(versionA, versionB) {
-  const messageError = "Formato incorreto, formato correto ex:  1.3.4.5";
+  const messageError =
+    "Formato incorreto. Os valores devem seguir o seguinte formato:  1.3.4.5";
   try {
     //Split versionA and versionB in new Array
     let verARR = versionA.split(".");

@@ -7,7 +7,7 @@ var _ = require("underscore");
 global.appRoot = path.resolve(__dirname);
 var app = express();
 
-// Trim Body
+// Removes extra spaces from strings at the beginning and at the end
 var trimmer = function (req, res, next) {
   req.body = _.object(
     _.map(req.body, function (value, key) {
@@ -16,7 +16,9 @@ var trimmer = function (req, res, next) {
   );
   next();
 };
+// use cors for requisitations
 app.use(cors());
+// use json to requisitations
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -24,7 +26,9 @@ app.use(
   })
 );
 app.use(trimmer);
+// Add single routes
 app.use("/", routes);
+// add routes for contacts api.
 app.use("/contacts", routesContact);
-
+// Listem server in localhost:3000
 app.listen(3000);

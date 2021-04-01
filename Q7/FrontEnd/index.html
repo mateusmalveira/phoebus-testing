@@ -24,6 +24,7 @@
               <a class="nav-link active" aria-current="page" href="index.html">Home</a>
             </li>            
           </ul>
+          <!-- Form search contacts -->
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" onkeyup="a.search_contact(event)" aria-label="Search">
           </form>
@@ -32,6 +33,7 @@
     </nav>
     <main class="container my-5">
           <div class="row">
+            <!-- Row insert contacts -->
             <div class="col-md-4" >
               <div class="py-5 px-5 mb-2" style="background-color: #eee;">
               <h4 class="text-center">Cadastrar Telefone</h4>
@@ -74,9 +76,12 @@
             </div>
           </div>           
     </main>
+    <!-- scripts Bootstrap JS -->
     <script src="js/bootstrap.min.js"></script>
+    <!-- Add axios from requisitions -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
+        // Api Services
         let base_url = 'http://localhost:3000/contacts/'
         const config = { headers: {'Content-Type': 'application/json'} };
         const ApiService = {
@@ -86,7 +91,7 @@
           updateID: (data) => axios.put(`${base_url}/`, data, config).then( res => res.data).catch(res => []),
           createID: (data) => axios.post(`${base_url}/`, data, config).then( res => res.data).catch(res => [])
         } 
-
+        // Contact list screen
         const contactListScreen = ({name, id}) => {
           return (`<li class="list-group-item my-2">
                    <div class="row align-items-center">
@@ -102,6 +107,7 @@
                   </li>`)
         }
 
+        // Modal screen
         const modalData = (props) => {
           let {name, id, telefone, email} = props.data;   
           return (
@@ -155,11 +161,15 @@
           )
         }
 
+        // Class agenda
         let Agenda = class Agenda {
           constructor(state, modal) {
+            // state form contacts
             this.state = [];
+            // modal
             this.modal = new bootstrap.Modal(document.querySelector('#modalShowContact'));
           }
+          // Main function return all contacts from api
           async index() {
             let data = await ApiService.getAll();
             if(data.data && data.data.length > 0){
@@ -168,15 +178,19 @@
               return this.reloadData();
             }           
           }
+          // the function reload data on screen
           reloadData(data=undefined) {
             let dataReload = data === undefined ? this.state : data
             const lista =  dataReload.map((e, i) => 
                   contactListScreen(e)
             ).join(' ');
             const list = document.querySelector("#contact-list");
+            // remove old data
             list.innerHTML = "";
+            // add new data
             return list.innerHTML = lista;
           }
+          // function remove contacts
           async excludeData(id) {
             const data = await ApiService.deleteID(id);
             if(data.data){
@@ -186,14 +200,15 @@
               }), 1);
               return this.reloadData();
             }            
-          }          
+          }   
+          //function list contact by id  
           async listData(id) {            
             const data = await ApiService.getID(id);            
             if(data.data){
               return data.data
             }
           }
-
+          //function search contacts using search form input
           async search_contact(event){
             let value= event.target.value;
             if(value === ""){
@@ -208,7 +223,7 @@
             return this.reloadData(lista);
             }
           }
-
+        //Function create data
          async createData() {
           const formCreate = await document.querySelectorAll("#create_contact input");
           const data = {}
@@ -223,6 +238,7 @@
               }
             })
          }
+        //  function update data
          async updateData(id) {
             const formUpdate = await document.querySelectorAll("#update-contact input");
             let data = {
@@ -237,7 +253,7 @@
               }
             }) 
           }
-
+          //function open modal
           async openModal(id, type='show'){
             let data;
             if(type === "show"){
@@ -245,28 +261,29 @@
             } 
             else if( type === "update"){
               data = await this.listData(id);
-            };           
+            };
+            //add new data from modal  
             let selectModal = await document.querySelector('#modalShowContact > .modal-dialog');
-            selectModal.innerHTML = "";      
-            selectModal.innerHTML = modalData({title: "Visualização de Dados", data: data, modal: this.modal, type:type})   
+            selectModal.innerHTML = ""; 
+            //if modal show all input entries will be read-only.   
+            selectModal.innerHTML = modalData({title: "Visualização de Dados", data: data, modal: this.modal, type:type})  
+            // show modal 
             this.modal.show(); 
+            // add event listener onclick close modal
             document.querySelectorAll('#modalShowContact button.close').forEach(btClose => {
               let modal = this.modal;
               btClose.addEventListener("click", function (){
+                // close modal
                 modal.hide();
               } );
             } )               
           }
         };
-
-    </script>  
-    
+    </script>     
     <script type="text/javascript">
+    // init scripts
      let a = new Agenda();
      a.index();    
-    </script>
-        
-        
-   
+    </script>     
   </body>
 </html>

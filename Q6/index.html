@@ -3,17 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Import my css -->
   <link rel="stylesheet" href="css/main.css">
+  <!-- import font roboto from google fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <!-- Import icons font -->
   <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
 </head>
 <body>
+  <!-- Header -->
   <header>
       <nav class="nav-bar">
+        <!-- The logo -->
         <div class="nav-id">
             <img class="nav-logo" src="img/custom.png" width="120"  />
-        </div>        
+        </div>     
+           <!-- The menu  -->
+           <!-- Menu displayed when the screen is larger than 990px -->
         <div class="nav-hidden">              
           <ul class="nav-menu" id="collapse-menu">
             <li class="nav-item">
@@ -26,7 +33,9 @@
               <a href="#" class="nav-link">Contato</a>
             </li>
           </ul>       
-      </div>     
+      </div>    
+       <!--The mobile menu  -->
+       <!-- The Mobile Menu is displayed when the screen is less than 990px -->
       <button class="nav-buttom"><i class="fas fa-bars fa-2x"></i></button>     
       <div class="mobile-nav">
           <ul class="nav-menu">
@@ -35,10 +44,11 @@
             <li class="nav-item"><a href="#" class="nav-link">Contato</a></li>
           </ul>
       </div>     
-   
+      <!-- End mobile menu -->   
       </div>
     </nav>
   </header>
+  <!-- The content website -->
   <main>
     <div class="content grid-row mt-2">      
       <div class="col-9 mb-2"> 
@@ -53,6 +63,8 @@
       </div>
     </div>
   </main>
+  <!-- End content website -->
+  <!-- Footer -->
   <footer class="content-footer">
     <div class="grid-row container">
       <div class="col-4 m-auto">
@@ -64,6 +76,7 @@
            </p>
          </div>
       </div>
+      <!-- The social list -->
       <div class="col-4 m-auto">
         <div class="fs">
             <h6 class="fs-title">Redes Sociais</h6>
@@ -85,6 +98,8 @@
 
         </div>          
       </div>
+      <!-- End social list -->
+      <!-- The contact list -->
       <div class="col-4 m-auto">
         <div class="fs">
           <h6 class="fs-title">Contato</h6>
@@ -104,11 +119,16 @@
           </ul>           
         </div>
      </div>
+     <!-- end contact list -->
     </div>
+
+    <!-- The copyright bar -->
     <div class="copyright-bar">
         <h6 class="copyright-text text-center">© 2021 Copyright <a href="#" class='copyright-link'>Custom</a> Todos los Derechos Reservados</h6>
     </div>
+    <!-- End copyright bar -->
   </footer>
+  <!-- End footer -->
 </body>
 
 </html>

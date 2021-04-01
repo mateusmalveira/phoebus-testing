@@ -116,6 +116,7 @@
               <img src="https://miro.medium.com/max/4000/0*MZMl76wKo2FQLqG0.png" width="50%" class="m-auto m-2-vertical"/>
             </div>
             <div class="m-2-vertical col-7 m-auto">
+              <!-- Notification -->
                 <div id="notify" class="">   
                   <div class="n-messages">               
                   <div class="notify-title font-bold"></div>
@@ -194,6 +195,7 @@
   <script type="text/javascript">
     // Notification Function
     const toast = {
+      // Function message. type error or success. Title of message and message text
       message: (type, title="", message="" ) => {
        let message_type = document.querySelector("#notify");
        let message_text = document.querySelector("#notify > .n-messages");
@@ -201,15 +203,16 @@
        message_text.childNodes[3].innerHTML = message;
        message_type.classList.add(type === 'error' ? 'error' : 'success')
       },
+      // Close message
       close: () => {
         let message_type = document.querySelector("#notify");
         let classe_message = message_type.classList;
          classe_message.contains("error") ? classe_message.remove("error") : classe_message.remove("success")
       }
     }
-    // Handling Error
+    // The function handles the api response errors.
     function trataError (err){
-      let status;
+      let status; 
       let message;
       if(err.response){
         let data = err.response;
@@ -222,13 +225,13 @@
       }
       return toast.message('error', `Erro ${status}`,  message );
     }
-    // Handling response
+    // The function handles the response received by the api.
     function trataResp (response){         
       if(response.length > 0){
          toast.message('success', `Concluido!!!`, "Repositório encontrado com successo!!!");  
         let itens = document.querySelector("#repositorios")
         // Remove all itens
-        itens.innerHTML = "";  
+        itens.innerHTML = "";        
         const print_itens = response.map(e => {
           return `
           <li class="repositorio-list m-2-vertical">
@@ -238,6 +241,7 @@
             </a>
           <li>`
         }).join(' ')     
+        // Print itens in screen
         return itens.innerHTML = `<ul class="list-unstyled">${print_itens}</ul>`          
       } 
       else {
@@ -245,11 +249,14 @@
       } 
     }
 
-    // Search from github api
+    // Search from github api using axios.
     async function searchFromGithub(){
+      // The USER constant receives the values entered in the input.
       const USER = await document.querySelector('#search').value  
+      // The url base from github api
       const URL_BASE = `https://api.github.com/users/${USER}/repos`;     
       const getData = async () => {
+        // Search in the api, if finds returns to the function trataresp, otherwise it returns to the function  trataerrors.
         try {
           const response = await axios.get(`${URL_BASE}`)
           return trataResp(response.data)
@@ -258,6 +265,7 @@
           return trataError(err)          
         }
       }
+      //the function return getData
       return getData()
     }  
   </script>

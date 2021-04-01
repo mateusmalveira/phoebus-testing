@@ -1,3 +1,5 @@
+// Author: Mateus Malveira
+// The CSS box-sizing property is used to change the default property of the box model
 html {
   box-sizing: border-box;
 }
@@ -6,14 +8,17 @@ html {
 *:after {
   box-sizing: inherit;
 }
-
+// remove decoration links
 a {
   text-decoration: none;
+  &:visited {
+    // remove visited color
+    color: unset;
+  }
 }
-a:visited {
-  color: unset;
-}
+//
 
+// Remove outline button by default
 button {
   outline: none;
 }
@@ -29,7 +34,7 @@ header {
   padding: 0px;
   margin: 0px;
 }
-
+// body
 body {
   background-color: $back-body;
   margin: 0px;
@@ -50,7 +55,7 @@ body {
       margin: 0.2em 0;
     }
   }
-
+  // button navbar
   .nav-buttom {
     .mobile-check {
       display: none;
@@ -62,16 +67,16 @@ body {
     @media (max-width: 990px) {
       display: block;
       &:focus {
+        // When the button is focused, the mobile menu will display.
+        // The used propried is called from sibling
         & ~ .mobile-nav {
-          // display: block;
-          // height: 200px;
           position: absolute;
           display: block;
         }
       }
     }
   }
-
+  // The mobile color
   .mobile-nav {
     top: 50px;
     left: 0px;
@@ -101,13 +106,14 @@ body {
     }
   }
 
+  // The main menu will only be shown on screens larger than 900px
   .nav-hidden > * {
     @media (max-width: 990px) {
       display: none;
     }
   }
 }
-// Navbar Menu
+// The main menu
 .nav-menu {
   overflow: hidden;
   list-style: none;
@@ -131,7 +137,8 @@ body {
     }
   }
 }
-//Conteúdo
+//Content of page
+// For demonstration purposes, the minimum size of content is 25em;
 .content {
   .content-aside {
     min-height: 25em;
@@ -141,21 +148,7 @@ body {
   }
 }
 
-// Grid System
-//Linha
-
-.grid-row {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-.grid-row.grid-row-reverse {
-  flex-direction: row;
-  @media screen and (max-width: 990px) {
-    flex-direction: row-reverse;
-  }
-}
-
+// The footer
 footer {
   margin: 0;
   padding: 0;
@@ -166,6 +159,7 @@ footer {
   padding-top: 1.5rem;
   // footer-section
   .fs {
+    // the footer title section
     .fs-title {
       padding-bottom: 1.5rem;
       text-transform: uppercase;
@@ -175,6 +169,7 @@ footer {
       margin-top: 0;
       padding-bottom: 0.8em;
       position: relative;
+      // after title is added one line
       &::after {
         content: "";
         width: 15%;
@@ -186,6 +181,7 @@ footer {
       }
     }
   }
+  // The copyright bar
   .copyright-bar {
     padding: 0.75rem 0;
     background-color: $site-color;
@@ -200,7 +196,7 @@ footer {
     }
   }
 }
-
+// Social icons
 .social-icon {
   i {
     color: #222;
@@ -208,55 +204,6 @@ footer {
     &:hover {
       color: $site-color;
     }
-  }
-}
-//Colunas MAX 12
-$number_of_columns: 12;
-@for $i from 1 through $number_of_columns {
-  .col-#{$i} {
-    //de acordo com o i divide-se e gera o número de colunas 1 = 1/12 2= 2/12 ... 12= 12/12
-    @media screen and (max-width: 990px) {
-      // Quando for menor que 990px o tamanho das colunas 100%
-      width: 100%;
-    }
-    width: calc((100%) / #{$number_of_columns} * #{$i});
-    padding: 0 15px;
-  }
-}
-
-.m-0-horizontal {
-  margin-left: 0px;
-  margin-bottom: 0px;
-}
-.m-0-vertical {
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-// Paddings and Margins
-$number_of_margins: 6;
-$single_row: 0.5;
-@for $i from 1 through $number_of_margins {
-  .mt-#{$i} {
-    margin-top: calc(#{$single_row} * #{$i}rem);
-  }
-  .mb-#{$i} {
-    margin-bottom: calc(#{$single_row} * #{$i}rem);
-  }
-  .m-#{$i}-horizontal {
-    margin-left: calc(#{$single_row} * #{$i}rem);
-    margin-right: calc(#{$single_row} * #{$i}rem);
-  }
-  .m-#{$i}-vertical {
-    margin-top: calc(#{$single_row} * #{$i}rem);
-    margin-bottom: calc(#{$single_row} * #{$i}rem);
-  }
-  .p-#{$i}-horizontal {
-    padding-left: calc(#{$single_row} * #{$i}rem);
-    padding-right: calc(#{$single_row} * #{$i}rem);
-  }
-  .p-#{$i}-vertical {
-    padding-top: calc(#{$single_row} * #{$i}rem);
-    padding-bottom: calc(#{$single_row} * #{$i}rem);
   }
 }
 
@@ -291,6 +238,87 @@ $single_row: 0.5;
   margin-left: auto !important;
   margin-right: auto !important;
 }
+
+// The grid system
+
+// Grid System Row
+
+.grid-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+// the function will change the positions of the elements in the mobile view
+.grid-row.grid-row-reverse {
+  flex-direction: row;
+  @media screen and (max-width: 990px) {
+    flex-direction: row-reverse;
+  }
+}
+
+//Colunas MAX 12
+$number_of_columns: 12;
+@for $i from 1 through $number_of_columns {
+  .col-#{$i} {
+    //If mobile views, change the width columns to 100%
+    @media screen and (max-width: 990px) {
+      width: 100%;
+    }
+    // In screens > 990 Each column will be divided by the maximum number of columns on grid
+    width: calc((100%) / #{$number_of_columns} * #{$i});
+    padding: 0 15px;
+  }
+}
+
+// col-1 = 100%/12 * 1 =  8,66
+// col-2 = 100%/12 * 2 =  16,66
+// col-12 = 100%
+
+.m-0-horizontal {
+  margin-left: 0px;
+  margin-bottom: 0px;
+}
+.m-0-vertical {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+// Generate Paddings and Margins Horizontal and vertical
+$number_of_margins: 6; //max
+$single_row: 0.5; //starts in 0.5
+@for $i from 1 through $number_of_margins {
+  .mt-#{$i} {
+    margin-top: calc(#{$single_row} * #{$i}rem);
+  }
+  .mb-#{$i} {
+    margin-bottom: calc(#{$single_row} * #{$i}rem);
+  }
+  .m-#{$i}-horizontal {
+    margin-left: calc(#{$single_row} * #{$i}rem);
+    margin-right: calc(#{$single_row} * #{$i}rem);
+  }
+  .m-#{$i}-vertical {
+    margin-top: calc(#{$single_row} * #{$i}rem);
+    margin-bottom: calc(#{$single_row} * #{$i}rem);
+  }
+  .p-#{$i}-horizontal {
+    padding-left: calc(#{$single_row} * #{$i}rem);
+    padding-right: calc(#{$single_row} * #{$i}rem);
+  }
+  .p-#{$i}-vertical {
+    padding-top: calc(#{$single_row} * #{$i}rem);
+    padding-bottom: calc(#{$single_row} * #{$i}rem);
+  }
+}
+
+/*
+output example
+
+p-1-vertical : {padding-top: 0.5 rem; padding-bottom: 0.5 rem }
+m-1-vertical : {margin-top: 0.5 rem; margin-bottom: 0.5rem}
+
+*/
+
+// The container generate margins in left and right depending on the screen size
 
 .container {
   padding-right: 15px;

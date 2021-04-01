@@ -44,8 +44,8 @@ function main() {
   let a = generateArray(6);
   // let a = [2, 1, 3, 5, 3, 2];
   console.log(`Array A = ${a}`);
-  let findDuplicate = locateDuplicate(a);
   // Find duplicate
+  let findDuplicate = locateDuplicate(a);
   console.log(`Duplicate = ${findDuplicate}`);
   if (findDuplicate !== -1) {
     //Remove Duplicate
