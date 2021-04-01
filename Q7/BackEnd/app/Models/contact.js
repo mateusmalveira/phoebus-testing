@@ -1,18 +1,22 @@
 const fs = require("fs");
+// Root folder
 var appRoot = require("app-root-path");
+// import database
 const DB = appRoot.path + "/db.json";
 const Contact = {
+  // List all
   listAll: () => {
     let data = fs.readFileSync(DB);
     return JSON.parse(data).contatos;
   },
+  // list contacts by id
   listID: (id) => {
     let data = fs.readFileSync(DB);
     const contatos = JSON.parse(data).contatos;
     return contatos.find((e) => e.id === parseInt(id));
   },
-
-  insert: (name, email, phone) => {
+  // insert a new contact
+  insert: (name, phone, email) => {
     let data = JSON.parse(fs.readFileSync(DB));
     let contacts = data.contatos;
     const last_id = contacts[contacts.length - 1].id;
@@ -28,7 +32,7 @@ const Contact = {
 
     return newContact;
   },
-
+  // update contacts
   update: (id, name, phone, email) => {
     let data = JSON.parse(fs.readFileSync(DB));
     let contacts = data.contatos;
@@ -41,6 +45,7 @@ const Contact = {
       return updateData;
     }
   },
+  // remove contacts
   delete: (id) => {
     let data = JSON.parse(fs.readFileSync(DB));
     let contacts = data.contatos;
